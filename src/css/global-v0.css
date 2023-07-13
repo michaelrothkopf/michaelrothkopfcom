@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&display=swap');
+
+* {
+  font-family: 'Roboto Mono', monospace, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  color: var(--text-primary);
+}
+
+/* Global color scheme variables */
+:root {
+  --bg-primary: #111;
+  --bg-secondary: #282828;
+  --bg-tertiary: #444;
+
+  --text-primary: #fff;
+  --text-secondary: #c8c8c8;
+  --text-tertiary: #aaa;
+  --text-inverted: #000;
+}
+
+/* Set the body to use the full page and the background color to the specified color */
+body {
+  margin: 0;
+  padding: 0;
+
+  background-color: var(--bg-primary);
+}
+
+/* Basic main navigation container structure */
+.nav-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  margin: 0;
+  padding: 1.25rem;
+
+  background-color: var(--bg-secondary);
+
+  user-select: none;
+}
+
+/* Brand heavier and no underline */
+.nav-main__brand {
+  font-weight: 400;
+  text-decoration: none;
+}
+
+/* No underline on nav links, lighter text */
+.nav-main__link {
+  font-weight: 300;
+  text-decoration: none;
+}
+
+/* Mobile-only styles */
+@media screen and (max-width: 767px) {
+  /* Persistent content takes up full parent container size and is flexbox */
+  .nav-main__persistent {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Persistent content spacing takes full flexbox width */
+  .nav-main__persistent-spacing {
+    flex: 1;
+  }
+
+  /* Collapsible section is vertical flexbox */
+  .nav-main__collapsible {
+    display: flex;
+    margin-top: 0.6rem;
+
+    flex-direction: column;
+    text-align: left;
+  }
+
+  /* Collapsible section hidden by collapsed class are hidden */
+  .nav-main__collapsible--collapsed {
+    display: none;
+  }
+
+  /* Navigation toggle displayed on same line as brand */
+  .nav-toggle {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  /* Navigation toggle bars given size, position, color, and transition effect */
+  .nav-toggle__bar {
+    width: 20px;
+    height: 2px;
+    margin-top: 4px;
+
+    background-color: var(--text-primary);
+    transition: opacity 0.2s, transform 0.3s;
+  }
+
+  /* Navigation toggle bars change position and opacity in open state */
+  .nav-toggle__bar--top.nav-toggle__bar--open {
+    transform: rotate(-45deg) translate(0, 8.2px);
+  }
+  .nav-toggle__bar--mid.nav-toggle__bar--open {
+    opacity: 0;
+  }
+  .nav-toggle__bar--bot.nav-toggle__bar--open {
+    transform: rotate(45deg) translate(0, -8.2px);
+  }
+
+  /* Mobile nav links have top margin */
+  .nav-main__link {
+    margin-top: 0.75rem;
+  }
+}
+
+/* Desktop-only styles */
+@media screen and (min-width: 768px) {
+  /* Main navigation is horizontal flexbox  with less padding than mobile */
+  .nav-main {
+    display: flex;
+    flex-direction: row;
+
+    padding: 2rem;
+  }
+
+  /* Main navigation spacing takes up whole flexbox space */
+  .nav-main__spacing {
+    flex: 1;
+  }
+
+  /* Desktop nav links have left margin */
+  .nav-main__link {
+    margin-left: 25px;
+    color: white;
+    transition: color 0.2s;
+  }
+
+  /* Desktop nav links have hover effect */
+  .nav-main__link:hover {
+    color: var(--text-secondary);
+  }
+
+  /* Hide toggle button */
+  .nav-toggle {
+    display: none;
+  }
+}

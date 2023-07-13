@@ -1,0 +1,86 @@
+.landing-content {
+  position: relative;
+
+  margin-top: 8em;
+  padding: 0 2em;
+}
+
+.landing-content__title {
+  font-size: 3.4rem;
+}
+
+.landing-content__description {
+  text-align: justify;
+}
+
+/* Hide the spacing by default */
+.landing-content__spacing {
+  flex: 0;
+}
+
+.landing-content__links {
+  margin-top: 3em;
+  text-align: center;
+}
+
+/* Buttons for links to other pages */
+.landing-content__link {
+  display: block;
+  padding: 0.75em;
+
+  background-color: transparent;
+  border: 1px solid white;
+
+  text-decoration: none;
+  color: var(--text-primary);
+
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.landing-content__link:not(:first-child) {
+  margin-top: 0.75em;
+}
+
+.landing-content__link:hover {
+  background-color: white;
+  color: var(--text-inverted);
+}
+
+/* Large desktop has landing-content on left side and no padding */
+@media screen and (min-width: 1024px) {
+  .landing-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  
+    margin: 0;
+    padding: 0 50px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .landing-content {
+    padding: 0;
+  }
+
+  .landing-content__information {
+    flex: 2;
+    text-align: left;
+  }
+
+  .landing-content__links {
+    margin: 0;
+  }
+
+  .landing-content__spacing {
+    flex: 1;
+  }
+
+  .landing-content__spacing--small {
+    flex: 0.5;
+  }
+}

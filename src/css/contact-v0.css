@@ -1,0 +1,41 @@
+.__main-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  margin: 0;
+  padding: 0 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-form {
+  text-align: center;
+}
+
+/* Buttons for links to other pages */
+.contact-form__link {
+  display: inline-block;
+  padding: 0.75em;
+
+  background-color: transparent;
+  border: 1px solid white;
+
+  text-decoration: none;
+  color: var(--text-primary);
+
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.contact-form__link:not(:first-child) {
+  margin-top: 0.75em;
+}
+
+.contact-form__link:hover {
+  background-color: white;
+  color: var(--text-inverted);
+}
