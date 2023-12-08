@@ -1,31 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&display=swap');
-
-* {
-  font-family: 'Roboto Mono', monospace, Geneva, Verdana, sans-serif;
-  box-sizing: border-box;
-  color: var(--text-primary);
-}
-
-/* Global color scheme variables */
-:root {
-  --bg-primary: #111;
-  --bg-secondary: #282828;
-  --bg-tertiary: #444;
-
-  --text-primary: #fff;
-  --text-secondary: #c8c8c8;
-  --text-tertiary: #aaa;
-  --text-inverted: #000;
-}
-
-/* Set the body to use the full page and the background color to the specified color */
-body {
-  margin: 0;
-  padding: 0;
-
-  background-color: var(--bg-primary);
-}
-
 /* Basic main navigation container structure */
 .nav-main {
   position: absolute;

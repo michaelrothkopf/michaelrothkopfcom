@@ -18,11 +18,14 @@ const quizQuestion = document.getElementById('quiz-question');
 
 // The quiz advance button
 const quizAdvance = document.getElementById('quiz-advance');
+quizAdvance.style.display = 'none';
 
 let nCorrect = 0;
 
 // When the quiz starts
 quizBegin.addEventListener('click', (e) => {
+  quizAdvance.style.display = 'inline-block';
+
   let quizData;
   console.log('Loading quiz data');
 
