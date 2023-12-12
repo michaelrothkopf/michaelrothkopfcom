@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Rothkopf's Quiz Maker</title>
+    <link rel="stylesheet" href="/css/global-v1.css">
+    <link rel="stylesheet" href="/css/nav-v1.css">
+    <link rel="stylesheet" href="/quizmaker/css/editor-v1.css">
+  </head>
+  <body>
+    <nav class="nav-main">
+      <div class="nav-main__persistent">
+        <a class="nav-main__brand" href="/quizmaker">Michael Rothkopf&apos;s Quiz Maker</a>
+        <div class="nav-main__persistent-spacing"></div>
+        <div class="nav-toggle" id="nav-toggle">
+          <div class="nav-toggle__bar nav-toggle__bar--top"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--mid"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--bot"></div>
+        </div>
+      </div>
+      <div class="nav-main__spacing"></div>
+      <div class="nav-main__collapsible nav-main__collapsible--collapsed" id="nav-main__collapsible">
+        <a href="editor" class="nav-main__link">Editor</a>
+        <!-- <a href="contact" class="nav-main__link">About</a> -->
+      </div>
+    </nav>
+    <div id="editor">
+      <div id="question-selector-container">
+        <button class="question-navigation-button question-navigation-button--selected" id="quiz-settings-nav">
+          Quiz Settings
+        </button>
+        <button class="question-navigation-button" id="quiz-question-0">
+          Question 1
+        </button>
+        <!-- <button id="new-question-button"><span id="new-question-plus">+</span><span id="new-question-label">New Question</span></button> -->
+        <div class="editor-dropdown" id="new-question-container">
+          <button><span id="new-question-select-label" class="editor-content-before-icon">New Question</span>+</button>
+          <div class="editor-dropdown-content">
+            <button id="new-question-multiple-choice">Multiple Choice</button>
+            <!-- <button id="question-type-true-false">True or False</button> -->
+          </div>
+        </div>
+      </div>
+      <div id="quiz-editor-container">
+        <div id="quiz-settings-container" class="editor-subcontainer editor-hidden">
+          <div class="editor-subcontainer-element editor-text-input-container">
+            <label for="quiz-name">Quiz name:</label>
+            <input type="text" name="quiz-name" id="quiz-name">
+          </div>
+
+          <div class="editor-subcontainer-element">
+            <input type="checkbox" name="quiz-settings-randomize-questions" id="quiz-settings-randomize-questions">
+            <label for="quiz-settings-randomize-questions">Randomize questions</label>
+          </div>
+
+          <div class="editor-subcontainer-element">
+            <button id="copy-quiz-data" class="quiz-setting-action-button">Copy Quiz Data</button>
+            <button id="import-quiz" class="quiz-setting-action-button">Import Quiz</button>
+            <button id="help-information-toggle" class="quiz-setting-action-button">Show Help</button>
+            <p class="help-information editor-hidden" id="help-information">Thank you for using my quiz editor&excl; To start, simply input the name of the quiz into the "Quiz Name" box or click "Import Quiz" at the bottom to work on an exiting quiz. Then, use the bar on the left to select the question you want to work on. You can create new questions by pressing "New Question" at the bottom of the left-hand bar and delete questions using the delete button in each question's editor. If you want to share your quiz, simply click "Copy Quiz Data" and it will be copied to the clipboard, which you can then post to a document to be used by others.</p>
+          </div>
+        </div>
+        <div id="question-editor-container" class="editor-subcontainer">
+          <div class="editor-subcontainer-element editor-textarea-container">
+            <label for="quiz-question-prompt">Prompt:</label>
+            <textarea name="quiz-question-prompt" id="quiz-question-prompt" cols="90" rows="3"></textarea>
+          </div>
+          <div class="editor-subcontainer-element editor-textarea-container">
+            <label for="quiz-question-answer">Answer:</label>
+            <textarea name="quiz-question-answer" id="quiz-question-answer" cols="90" rows="3"></textarea>
+          </div>
+          <!-- <div class="editor-dropdown">
+            <button><span id="question-type-label" class="editor-content-before-icon">Question Type</span>&#x25BC;</button>
+            <div class="editor-dropdown-content">
+              <button id="question-type-multiple-choice">Multiple Choice</button>
+              <button id="question-type-true-false">True or False</button>
+            </div>
+          </div> -->
+          <table class="editor-subcontainer-element editor-hidden" id="question-options-table">
+            <tr>
+              <!-- <th>Answer</th> -->
+              <th class="question-options-table-text">Text</th>
+              <th></th>
+            </tr>
+            <!-- <tr>
+              <td><button class="editor-checkbox" data-checked="no"></button></td>
+              <td><input type="text" name="question-option-text-23908gj2380g" id="question-option-text-23908gj2380g"></td>
+              <td><button>X</button></td>
+            </tr> -->
+            <tr>
+              <td><button>+</button></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script src="js/editor.js" type="module"></script>
+  </body>
+</html>

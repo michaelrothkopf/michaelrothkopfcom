@@ -67,6 +67,28 @@ export default class Quiz {
     // Return the first element
     return this.availableQuestions.splice(0, 1)[0];
   }
+
+  /**
+   * Checks whether a question exists in the quiz
+   * @param {number} index The index of the question
+   * @returns Whether the question exists
+   */
+  hasQuestion(index) {
+    return this.questions.length > 0 && index < this.questions.length;
+  }
+
+  /**
+   * Returns the question at an index if it exists
+   * @param {number} index The index of the question to retrieve
+   * @returns The question data, or null if it doesn't exist
+   */
+  getQuestion(index) {
+    if (index < this.questions.length) {
+      return this.questions[index];
+    }
+
+    return null;
+  }
   
   /**
    * Populates the Quiz class with serialized data
