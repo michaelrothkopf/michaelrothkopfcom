@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Rothkopf's Automatic Email Generator</title>
+    <link rel="stylesheet" href="/css/global-v1.css">
+    <link rel="stylesheet" href="/css/nav-v1.css">
+    <link rel="stylesheet" href="css/generator-v1.css">
+  </head>
+  <body>
+    <nav class="nav-main">
+      <div class="nav-main__persistent">
+        <a class="nav-main__brand" href="/quizmaker">Michael Rothkopf&apos;s Automatic Email Generator</a>
+        <div class="nav-main__persistent-spacing"></div>
+        <div class="nav-toggle" id="nav-toggle">
+          <div class="nav-toggle__bar nav-toggle__bar--top"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--mid"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--bot"></div>
+        </div>
+      </div>
+      <div class="nav-main__spacing"></div>
+      <div class="nav-main__collapsible nav-main__collapsible--collapsed" id="nav-main__collapsible">
+        <a href="editor" class="nav-main__link">Editor</a>
+        <!-- <a href="contact" class="nav-main__link">About</a> -->
+      </div>
+    </nav>
+    <div id="generator">
+      <div id="generator-instructions-container">
+        <h3>Michael Rothkopf&apos;s Automatic Email Generator</h3>
+        <p>Automated emails cost a lot of money. If you're sending 50 or 60 emails from your personal address with a similar template, this tool is significantly faster.</p>
+        <button id="generator-instructions-continue">Continue</button>
+      </div>
+      <div id="generator-email-template-container" class="generator-email-template-container generator-hidden">
+        <h3>Paste the email template in the box below. Wherever you want the individual's name to appear, type %NAME% &lpar;including the percent signs&excl;&rpar;.</h3>
+        <textarea class="generator-data-box" name="generator-template-box" id="generator-template-box" cols="120" rows="15"></textarea>
+        <button id="generator-email-template-continue">Continue</button>
+      </div>
+      <div id="generator-mailinglist-container" class="generator-mailinglist-container generator-hidden">
+        <h3>Paste the list of people you wish to email in the box below. Use the format "John Doe,johndoe@example.com" and separate email addresses by new lines.</h3>
+        <textarea class="generator-data-box" name="generator-mailinglist-box" id="generator-mailinglist-box" cols="120" rows="15"></textarea>
+        <button id="generator-mailinglist-continue">Continue</button>
+      </div>
+      <div id="generator-email-settings-container" class="generator-email-settings-container generator-hidden">
+        <label for="generator-subject">Email Subject:</label>
+        <textarea class="generator-data-box" name="generator-subject" id="generator-subject" cols="120" rows="1"></textarea>
+        <label for="generator-bcc-address"><strong>BCC Address</strong><br />If you want to BCC another email address on all the emails you send, put that email in the box below. Leave it blank if you do not want to do so.</label>
+        <textarea class="generator-data-box" name="generator-bcc-address" id="generator-bcc-address" cols="120" rows="1"></textarea>
+        <button id="generator-email-settings-continue">Continue</button>
+      </div>
+      <div id="generator-link-container" class="generator-link-container generator-hidden">
+        <h3>Click the button below to open your email client with the data already filled out.</h3>
+        <a href="#" id="generator-mail-link">Open Email</a>
+      </div>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script src="js/generator.js" type="module"></script>
+  </body>
+</html>
