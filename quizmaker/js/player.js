@@ -159,7 +159,7 @@ quizInstructionsContinue.addEventListener('click', (e) => {
         for (const opt of checkOptions) {
           // If the option is correct
           if (opt == question.answer) {
-            // Add the correct class to the div
+            // Mark the answer as correct
             document.getElementById('quiz-radio-container-' + btoa(opt)).classList.add('quiz-radio-container--correct');
             
             // If the element is selected
@@ -171,6 +171,7 @@ quizInstructionsContinue.addEventListener('click', (e) => {
 
           // If it is selected but false
           else if (document.getElementById('quiz-mc-option-' + btoa(opt)).checked) {
+            // Mark the answer as incorrect
             document.getElementById('quiz-radio-container-' + btoa(opt)).classList.add('quiz-radio-container--incorrect');
           }
         }
