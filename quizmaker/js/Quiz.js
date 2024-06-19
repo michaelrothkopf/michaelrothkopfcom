@@ -1,6 +1,7 @@
 export default class Quiz {
   constructor(data=null) {
     // Create the blank quiz attributes
+    this.uuid = crypto.randomUUID();
     this.title = '';
     this.subject = '';
     this.settings = {
@@ -103,12 +104,12 @@ export default class Quiz {
         // Parse it directly as JSON
         quizData = JSON.parse(data);
       } catch (e0) {
-        // If that fails, try to load it via Base64
+        // If that fails, try to load it via URI decoding
         try {
-          quizData = JSON.parse(atob(data));
+          quizData = JSON.parse(decodeURIComponent(data));
         } catch (e) {
           // If that fails, print an error and abort
-          console.error(`[Quiz][E101] Error loading quiz data; string data invalid (${e})`);
+          console.error(`[Quiz][E101] Error loading quiz data; invalid formatting (${e})`);
           return;
         }
       }
@@ -118,16 +119,47 @@ export default class Quiz {
       quizData = data;
     }
 
-    try {
-      // Extract the basic attributes from the quiz data
-      this.title = quizData.title;
-      this.subject = quizData.subject;
-      this.settings = quizData.settings;
-      this.questions = quizData.questions;
-    } catch (e) {
-      // Print an error and abort
-      console.error(`[Quiz][E102] Error loading quiz data; quiz data invalid (${e})`);
-      return;
+    // Extract the basic attributes from the quiz data
+    this.uuid = quizData.uuid;
+    this.title = quizData.title;
+    this.subject = quizData.subject;
+    this.settings = quizData.settings;
+    this.questions = quizData.questions;
+
+    // If the quiz UUID is invalid, throw an error
+    if (typeof this.uuid !== 'string' || this.uuid.length < 36) {
+      throw new Error('Unable to load quiz data.');
     }
+
+    // We want to catch the error in the client code
+    // try {
+    //   // Extract the basic attributes from the quiz data
+    //   this.uuid = quizData.uuid;
+    //   this.title = quizData.title;
+    //   this.subject = quizData.subject;
+    //   this.settings = quizData.settings;
+    //   this.questions = quizData.questions;
+    // } catch (e) {
+    //   // Print an error and abort
+    //   console.error(`[Quiz][E102] Error loading quiz data; quiz data invalid (${e})`);
+    //   return;
+    // }
+  }
+
+  /**
+   * Converts the Quiz object into a URI-encoded string
+   */
+  toString() {
+    // Create an object representation of the quiz
+    const objectRep = {
+      uuid: this.uuid,
+      title: this.title,
+      subject: this.subject,
+      settings: this.settings,
+      questions: this.questions,
+    };
+
+    // Return its string value
+    return encodeURIComponent(JSON.stringify(objectRep));
   }
 }

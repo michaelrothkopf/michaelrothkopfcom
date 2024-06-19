@@ -1,26 +1,26 @@
 import Quiz from './Quiz.js';
 
-// Create listeners for all the checkboxes
-const initializeCheckboxes = () => {
-  // Handle clicks for the checkboxes
-  const onCheckboxClick = (e) => {
-    // Toggle whether the checkbox is checked
-    if (e.target.dataset.checked === 'yes') {
-      e.target.dataset.checked = 'no';
-    }
-    else {
-      e.target.dataset.checked = 'yes';
-    }
-  }
+// // Create listeners for all the checkboxes
+// const initializeCheckboxes = () => {
+//   // Handle clicks for the checkboxes
+//   const onCheckboxClick = (e) => {
+//     // Toggle whether the checkbox is checked
+//     if (e.target.dataset.checked === 'yes') {
+//       e.target.dataset.checked = 'no';
+//     }
+//     else {
+//       e.target.dataset.checked = 'yes';
+//     }
+//   }
 
-  // For every checkbox with the class .editor-checkbox
-  for (const checkbox of document.getElementsByClassName('editor-checkbox')) {
-    // Add the event listener
-    checkbox.addEventListener('click', onCheckboxClick);
-  }
-}
+//   // For every checkbox with the class .editor-checkbox
+//   for (const checkbox of document.getElementsByClassName('editor-checkbox')) {
+//     // Add the event listener
+//     checkbox.addEventListener('click', onCheckboxClick);
+//   }
+// }
 
-initializeCheckboxes();
+// initializeCheckboxes();
 
 // The whole editor
 const editor = document.getElementById('editor');
@@ -28,15 +28,17 @@ const quizEditorContainer = document.getElementById('quiz-editor-container');
 
 // The navigation elements
 const questionSelectorContainer = document.getElementById('question-selector-container');
+const questionSelectorQuestions = document.getElementById('question-selector-questions');
 const quizSettingsNavButton = document.getElementById('quiz-settings-nav');
 const newQuestionButton = document.getElementById('new-question-button');
+const newQuestionMultipleChoiceButton = document.getElementById('new-question-multiple-choice');
 
 // The quiz settings screen
 const quizSettingsContainer = document.getElementById('quiz-settings-container');
 const quizNameInput = document.getElementById('quiz-name');
 const quizSettingsRandomizeQuestions = document.getElementById('quiz-settings-randomize-questions');
-const copyQuizData = document.getElementById('copy-quiz-data');
-const importQuiz = document.getElementById('import-quiz');
+const copyQuizDataButton = document.getElementById('copy-quiz-data');
+const importQuizButton = document.getElementById('import-quiz');
 const helpInformationToggle = document.getElementById('help-information-toggle');
 const helpInformation = document.getElementById('help-information');
 
@@ -47,27 +49,55 @@ const quizQuestionPrompt = document.getElementById('quiz-question-prompt');
 // // const questionTypeTrueFalse = document.getElementById('question-type-true-false');
 const quizQuestionAnswer = document.getElementById('quiz-question-answer');
 const questionOptionsTable = document.getElementById('question-options-table');
+const addDistractorButton = document.getElementById('add-distractor-button');
 
 // Initialize the global editor state
 const editorState = {
-  quiz: new Quiz(`ewogICJ0aXRsZSI6ICJNYWNCYWluIFVuaXQgMi8zQSBUZXN0IiwKICAic3ViamVjdCI6ICJBUCBXb3JsZCBIaXN0b3J5OiBNb2Rlcm4iLAogICJzZXR0aW5ncyI6IHsKICAgICJyYW5kb21pemVRdWVzdGlvbk9yZGVyIjogZmFsc2UKICB9LAogICJxdWVzdGlvbnMiOiBbCiAgICB7CiAgICAgICJwcm9tcHQiOiAiVGhlIFNpbGsgUm9hZCB3YXMgYmVzdCBrbm93biBmb3IgdHJhZGluZyB3aGljaCBvZiB0aGUgZm9sbG93aW5nIHR5cGVzIG9mIGdvb2RzPyIsCiAgICAgICJhbnN3ZXIiOiAiVGhlc2UgYXJlIGFsbCBqdXN0IGRhbW4gc3lub255bXMgZm9yIGVhY2ggb3RoZXIuIiwKICAgICAgInR5cGUiOiAiTXVsdGlwbGVDaG9pY2UiLAogICAgICAiZGlzdHJhY3RvcnMiOiBbCiAgICAgICAgIkx1eHVyeS4iLAogICAgICAgICJQcmVzdGlnZS4iLAogICAgICAgICJIaWdobHkgVmFsdWFibGUuIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIldoaWNoIG9mIHRoZXNlIGl0ZW1zIHdlcmUgTk9UIHRyYWRlZCBvbiB0aGUgU2lsayBSb2FkPyIsCiAgICAgICJhbnN3ZXIiOiAiU2FsdHMgYW5kIHByZWNpb3VzIG1ldGFscyBzdWNoIGFzIGdvbGQgYW5kIHNpbHZlci4iLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiTHV4dXJ5IGdvb2RzIHN1Y2ggYXMgc2lsayBmcm9tIENoaW5hIGFuZCBzcGljZXMgZnJvbSBJbmRpYS4iLAogICAgICAgICJSZWxpZ2lvdXMgaWRlYWxzIHN1Y2ggYXMgQnVkZGhpc20uIiwKICAgICAgICAiRGlzZWFzZXMgc3VjaCBhcyB0aGUgQmxhY2sgRGVhdGgiCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJwcm9tcHQiOiAiQmVjYXVzZSBvZiBhbiBpbmNyZWFzZSBpbiBkZW1hbmQgZm9yIHNpbGsgd2l0aGluIENoaW5hLCB3aGljaCBvZiB0aGUgZm9sbG93aW5nIGJlc3Qgc2hvd3MgYSBjaGFuZ2UgYmFzZWQgb24gQ2hpbmEncyB0cmFuc2l0aW9uIHRvIHByb2R1Y2luZyBtb3JlIHNpbGs/IiwKICAgICAgImFuc3dlciI6ICJUaGUgc2hpZnQgb2YgYWdyaWN1bHR1cmFsIHByYWN0aWNlcyB0byBtb3JlIGluZHVzdHJpYWwgcHJvZHVjdGlvbiBiYXNlZCBvbmVzLiIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJUaGUgc2hpZnQgb2YgQ29uZnVjaWFuIGJlbGllZiB0byBJc2xhbWljIGJlbGllZiBkdWUgdG8gYSBtYXNzIHJldm9sdCBhZ2FpbnN0IHRoZSBpbmNyZWFzZSBvZiBkZW1hbmQuIiwKICAgICAgICAiVGhlIHNoaWZ0IG9mIGxpdmluZyBpbiB0aGUgY2l0aWVzIHRvIHRoZSBjb3VudHJ5c2lkZSBpbiBvcmRlciB0byBhY2hpZXZlIG1vcmUgc2lsay4iLAogICAgICAgICJUaGUgc2hpZnQgZnJvbSBoYXZpbmcgYSBtb25hcmNoeSBnb3Zlcm5tZW50IHRvIGhhdmluZyBhIGRlbW9jcmF0aWMgZ292ZXJubWVudC4iCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJwcm9tcHQiOiAiX19fX19fXyBiZWdhbiB0byBzcHJlYWQgdGhyb3VnaG91dCBBc2lhIHRoYW5rcyB0byBJbmRpYW4gbWVyY2hhbnRzIGNhcnJ5aW5nIHRoZSBwcmFjdGljZSBhbG9uZS4gVGhlIE1haGF5YW5hIHZhcmlhdGlvbiB3YXMgYSB2ZXJzaW9uIHRoYXQgd2FzIHBvcHVsYXIgYXMgd2VsbC4iLAogICAgICAiYW5zd2VyIjogIkJ1ZGRoaXNtIiwKICAgICAgInR5cGUiOiAiTXVsdGlwbGVDaG9pY2UiLAogICAgICAiZGlzdHJhY3RvcnMiOiBbCiAgICAgICAgIkNvbmZ1Y2lhbmlzbSIsCiAgICAgICAgIkNocmlzdGlhbml0eSIsCiAgICAgICAgIkhpbmR1aXNtIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIldoYXQgbWFkZSB0aGUgc2VhIHJvYWRzIHBvc3NpYmxlPyAoQ2hvb3NlIFRXTyBhbnN3ZXJzKSIsCiAgICAgICJhbnN3ZXIiOiAiTGF0ZWVuLCBNb25zb29ucyIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJDYW1lbHMsIE1vbnNvb25zIiwKICAgICAgICAiRHJlYWRub3VnaHRzLCBMYXRlZW5zIiwKICAgICAgICAiQ2FtZWxzLCBEcmVhZG5vdWdodHMiLAogICAgICAgICJEcmVhZG5vdWdodHMsIE1vbnNvb25zIiwKICAgICAgICAiQ2FtZWxzLCBMYXRlZW5zIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIkhvdyBkaWQgdGhlIFNlYSBSb2FkIGRpZmZlciBpbiB0ZXJtcyBvZiBnb29kcyBmcm9tIHRoZSBTaWxrIFJvYWQ/IiwKICAgICAgImFuc3dlciI6ICJUaGUgU2VhIFJvYWQgaGFkIG1vcmUgZXZlcnlkYXkgYnVsayBpdGVtcywgYXMgc2hpcHMgd2VyZSBhYmxlIHRvIGNhcnJ5IGhlYXZpZXIgd2VpZ2h0cyBhbmQgbGFyZ2VyIGxvYWRzLiIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJUaGUgU2VhIFJvYWQgdHJhZGVkIHRoZSBleGFjdCBzYW1lIHRoaW5ncyBhcyB0aGUgU2lsayBSb2FkLSBwdXJlIGx1eHVyeSBpdGVtcy4iLAogICAgICAgICJUaGUgU2lsayBSb2FkIHRyYWRlZCBtYWlubHkgbHV4dXJ5IGl0ZW1zLCB3aGVyZWFzIHRoZSBTZWEgUm9hZCBvbmx5IHRyYWRlZCBmb29kcyBhbmQgcmVsaWdpb25zLiIsCiAgICAgICAgIlRoZSBTZWEgUm9hZCBoYWQgbW9yZSBsdXh1cnkgaXRlbXMsIHdoaWxlIHRoZSBTaWxrIFJvYWQgaGFkIG5vIGx1eHVyeSBpdGVtcyB3aGF0c29ldmVyLiIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgInByb21wdCI6ICJXaGF0IHJvbGUgZGlkIFN3YWhpbGkgcGxheSBpbiB0aGUgU2VhIFJvYWQ/IiwKICAgICAgImFuc3dlciI6ICJUaGV5IHBsYXllZCB0aGUgcm9sZSBvZiBjb21tZXJjaWFsIGNlbnRlcnMgdGhhdCBhY2N1bXVsYXRlZCBnb29kcyBhbmQgcmUtdHJhZGVkIHRoZW0uIEJlY2F1c2Ugb2YgdGhpcywgdGhleSBjb252ZXJ0ZWQgdG8gSXNsYW0gYmVjYXVzZSBvZiBBcmFiIGluZmx1ZW5jZS4iLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiVGhleSBwbGF5ZWQgdGhlIHJvbGUgb2YgYW50YWdvbmlzdHMsIGFzIG11Y2ggbGlrZSB0aGUgcGlyYXRlcyBvbiB0aGUgU2lsayBSb2FkLCB0aGV5IHdvdWxkIGF0dGFjayB0cmF2ZWxzIG9uIHRoZSBTZWEgUm9hZC4iLAogICAgICAgICJUaGV5IHBsYXllZCB0aGUgcm9sZSBvZiB0eXJhbnRzIG9mIHRyYWRlLCBjb250cm9sbGluZyBuZWFybHkgZXZlcnkgcGFydCBvZiB0aGUgU2VhIFJvYWQgaW5jbHVkaW5nIHRoZSBTdHJhaXRzIG9mIE1hbGFjY2EiLAogICAgICAgICJUaGV5IHBsYXllZCB0aGUgcm9sZSBvZiBsb2NhbCB0cmFkZSBtYXJ0cyBjYWxsZWQgQ2FyYXZhbnNlcmFpcywgaW4gd2hpY2ggdHJhdmVsZXJzIGNvdWxkIHJlc3QgYW5kIHN0b2NrIHVwIG9uIHN1cHBsaWVzIGZvciBsYXRlciB0cmF2ZWxzLiIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgInByb21wdCI6ICJXaG8gd2VyZSB0aGUgdGhyZWUgbWFpbiBwYXJ0aWNpcGFudHMgaW4gdGhlIFNlYSBSb2FkIG92ZXIgdGhlIEluZGlhbiBPY2Vhbj8iLAogICAgICAiYW5zd2VyIjogIlNvdXRoIEFzaWEsIEFmcmljYSwgYW5kIHRoZSBNaWRkbGUgRWFzdCIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJUaGUgTWlkZGxlIEVhc3QsIEV1cm9wZSwgYW5kIFdlc3Rlcm4gQXNpYSIsCiAgICAgICAgIkFmcmljYSwgRXVyb3BlLCBhbmQgQ2hpbmEiLAogICAgICAgICJTb3V0aCBBc2lhLCBFYXN0IEFmcmljYSwgYW5kIEluZGlhIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIkhvdyB3ZXJlIHRoZSBub21hZGljIEppZSBwZW9wbGUgYWZmZWN0ZWQgYnkgdGhlIFNpbGsgUm9hZD8iLAogICAgICAiYW5zd2VyIjogIlRoZSBzcHJlYWQgb2YgQnVkZGhpc20gbGVkIHRvIHRoZWlyIGNvbnZlcnNpb24gYW5kIHRoZSBldmVudHVhbCBidWlsZGluZyBvZiBCdWRkaGlzdCB0ZW1wbGVzLiIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJUcmF2ZWxlcnMgb24gdGhlIFNpbGsgUm9hZCBmZWFyZWQgdGhlbSBncmVhdGx5IGR1ZSB0byB0aGVtIGJlaW5nIHZpZXdlZCBhcyBzYXZhZ2VzLiIsCiAgICAgICAgIlRoZSBKaWVzIGV2ZW50dWFsbHkgbWFkZSB0aGVpciB3YXkgaW50byB0aGUgQ2hpbmVzZSBnb3Zlcm5tZW50LCBlZmZlY3RpdmVseSBlbmRpbmcgdGhhdCBuZXcgZHluYXN0eSBhbmQgY3JlYXRpbmcgYSBuZXcgb25lLiIsCiAgICAgICAgIlRoZSBKaWVzIHNlcnZlZCBhcyBvcGVyYXRvcnMgb2YgQ2FyYXZhbnNlcmFpcyBhbmQgaGVscGVkIHRha2UgY2FyZSBvZiB0cmF2ZWxlcnMgZHVlIHRvIHRoZWlyIGtub3dsZWRnZSBvZiB0aGUgbGFuZC4iCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJwcm9tcHQiOiAiX19fX19fXyB3ZXJlIHBsYWNlcyBhbG9uZyB0aGUgU2lsayBSb2FkIHdoZXJlIHRyYXZlbGVycyBjb3VsZCByZWxheCBhbmQgc3RvY2sgdXAgb24gc3VwcGxpZXMuIiwKICAgICAgImFuc3dlciI6ICJDYXJhdmFuc2VyYWlzIiwKICAgICAgInR5cGUiOiAiTXVsdGlwbGVDaG9pY2UiLAogICAgICAiZGlzdHJhY3RvcnMiOiBbCiAgICAgICAgIkhvdGVscyIsCiAgICAgICAgIkNhcmF2YW5zIiwKICAgICAgICAiTW90ZWxzIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIldoaWNoIGdyb3VwIG1haW5seSBjb250cm9sbGVkIHRyYWRlIG9uIHRoZSBTZWEgUm91dGU/IiwKICAgICAgImFuc3dlciI6ICJBcmFicyAoU3dhaGlsaXMpIiwKICAgICAgInR5cGUiOiAiTXVsdGlwbGVDaG9pY2UiLAogICAgICAiZGlzdHJhY3RvcnMiOiBbCiAgICAgICAgIk1vbmdvbHMiLAogICAgICAgICJJbmRpYW5zIiwKICAgICAgICAiQ2hyaXN0aWFucyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgInByb21wdCI6ICJIb3cgZGlkIHRoZSBTYW5kIFJvYWQgZGlmZmVyIGZyb20gdGhlIFNlYSBhbmQgU2lsayBSb2Fkcz8iLAogICAgICAiYW5zd2VyIjogIlRoZSBTYW5kIFJvYWQgc2F3IHRoZSB0cmFuc3BvcnRhdGlvbiBvZiByYXcgbWF0ZXJpYWwgaXRlbXMsIHN1Y2ggYXMgc2FsdHMgYW5kIHByZWNpb3VzIG1ldGFscy4iLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiVGhlIFNhbmQgUm9hZCBzYXcgdGhlIHRyYW5zcG9ydGF0aW9uIG9mIGx1eHVyeSBpdGVtcyBzdWNoIGFzIHNwaWNlcyBmcm9tIEluZGlhLiIsCiAgICAgICAgIlRoZSBTYW5kIFJvYWQgc2F3IHRoZSBncmVhdGVzdCBudW1iZXIgb2YgY2hhbmdlcyB0aHJvdWdob3V0IGl0cyBsaWZldGltZS4iLAogICAgICAgICJObyBkaWZmZXJlbmNlIHdoYXRzb2V2ZXIgY2FuIGJlIGRldGVybWluZWQuIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIldoYXQgdGVjaG5vbG9naWNhbCBpbnRyb2R1Y3Rpb24gdG8gdGhlIFNhbmQgUm9hZCBoZWxwZWQgc2hhcGUgdGhlIHRyYW5zcG9ydGF0aW9uIG9mIGdvb2RzIG92ZXIgdGhlIHRyYW5zLVNhaGFyYW4gZGVzZXJ0cz8iLAogICAgICAiYW5zd2VyIjogIkNhbWVscyIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJIb3JzZXMiLAogICAgICAgICJMbGFtYXMiLAogICAgICAgICJBbHBhY2FzIChha2EgdGhlIGNvb2xlciBMbGFtYXMpIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIldoYXQgcHJlc3RpZ2UgbWV0YWwgd2FzIHNvdWdodCBhYm92ZSBBTEwgZWxzZSBpbiB0aGUgdHJhbnMtU2FoYXJhbiB0cmFkZSByb3V0ZT8iLAogICAgICAiYW5zd2VyIjogIkdvbGQiLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiU2lsdmVyIiwKICAgICAgICAiQ29wcGVyIiwKICAgICAgICAiT2JzaWRpYW4iCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJwcm9tcHQiOiAiSG93IGRpZCBNYWxpIGJlY29tZSBvbmUgb2YgdGhlIHdlYWx0aGllciBlbXBpcmVzIGFuZCBtb3JlIHN0cmF0ZWdpYyBwbGF5ZXJzIGluIHRoZSB0cmFucy1TYWhhcmFuIHRyYWRlPyIsCiAgICAgICJhbnN3ZXIiOiAiTW9ub3BvbGl6ZWQgdGhlIGltcG9ydCBvZiBzdHJhdGVnaWMgZ29vZHMgKGkuZSBwdXQgdGF4ZXMgb24gaXRlbXMgdGhhdCBwZW9wbGUgbmVlZGVkIHRvIHBheSkuIiwKICAgICAgInR5cGUiOiAiTXVsdGlwbGVDaG9pY2UiLAogICAgICAiZGlzdHJhY3RvcnMiOiBbCiAgICAgICAgIk11c2xpbSB0cmF2ZWxlciBJYm4gQmF0dHV0YSBoZWxwZWQgaW5mbHVlbmNlIHRoZSBwcmFjdGljZXMgb2YgTWFsaSdzIHBlb3BsZS4iLAogICAgICAgICJTbGF2ZSBsYWJvciBhbGxvd2VkIGZvciB0aGVtIHRvIHByb3ZpZGUgYSBmYXN0ZXIgYW5kIG1vcmUgZWZmaWNpZW50IGV4cG9ydCBvZiBpdGVtcy4iLAogICAgICAgICJLaWxsZWQgb2ZmIHRoZSBjb21wZXRpdGlvbi4gU2ltcGxlIGFzIHRoYXQuIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIldoaWNoIG9mIHRoZSBmb2xsb3dpbmcgZW1waXJlcy9keW5hc3RpZXMgIHdlcmUgTk9UIGNvbnNpZGVyZWQgYSBHdW5wb3dkZXIgRW1waXJlPyIsCiAgICAgICJhbnN3ZXIiOiAiUWluZyIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJPdHRvbWFuIiwKICAgICAgICAiTXVnaGFsIiwKICAgICAgICAiQWxsIG9mIHRoZXNlIHdlcmUgR3VucG93ZGVyIEVtcGlyZXMiCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJwcm9tcHQiOiAiV2h5IHdlcmUgdGhlIE90dG9tYW5zIHNvIGVmZmljaWVudCBpbiB0ZXJtcyBvZiBleHBhbmRpbmcgdGhlaXIgZW1waXJlPyIsCiAgICAgICJhbnN3ZXIiOiAiQWxsIG9mIHRoZXNlIG9wdGlvbnMgYXJlIHJlYXNvbnMgdGhleSB3ZXJlIHNvIGVmZmljaWVudC4iLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiVGhlaXIgbG9jYXRpb24gb24gdGhlIEFuYXRvbGlhbiBQZW5pbnN1bGEuIiwKICAgICAgICAiVGhlaXIgdXNhZ2Ugb2YgZ3VucG93ZGVyIGZpcmVhcm1zLiIsCiAgICAgICAgIlRoZSB3ZWFrZW5pbmcgb2YgQ29uc3RhbnRpbm9wbGUgY2F1c2VkIGJ5IHRoZSBDcnVzYWRlcyBpbiB0aGUgMTR0aCBDZW50dXJ5IgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIldvbWVuIGluIHRoZSBPdHRvbWFuIEVtcGlyZSB3ZXJlIGFsbG93ZWQgYWxsIG9mIHRoZSBmb2xsb3dpbmcgRVhDRVBUIiwKICAgICAgImFuc3dlciI6ICJUaGUgYWJpbGl0eSB0byB3b3JrIGluIHRoZSBtaWxpdGFyeSIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJUaGUgYWJpbGl0eSB0byBvd24gcHJvcGVydHkiLAogICAgICAgICJUaGUgYWJpbGl0eSB0byBub3QgYmUgZm9yY2VkIGludG8gYSBtYXJyaWFnZSIsCiAgICAgICAgIlRoZSBhYmlsaXR5IHRvIHdvcmsgZm9yIHRoZSBnb3Zlcm5tZW50IgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIl9fX19fIHdlcmUgaXNzdWVkIHVuZGVyIHRoZSBPdHRvbWFucywgd2hpY2ggYWxsb3dlZCBmb3IgdGhlIGFkbWluaXN0cmF0aW9uIG9mIHNlcGFyYXRlIHJlbGlnaW91cyBjb21tdW5pdGllcyB0aGF0IHJlbWFpbmVkIGluZGVwZW5kZW50IGZyb20gZWFjaCBvdGhlci4gVGhpcyBhbGxvd2VkIGZvciB0aGUgZW1waXJlIHRvIGZ1bmN0aW9uIG1vcmUgZWZmZWN0aXZlbHksIGFzIHRvbGVyYXRpb24gdGhyb3VnaG91dCByZXN1bHRlZCBpbiBwZWFjZS4iLAogICAgICAiYW5zd2VyIjogIk1pbGxldHMiLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiTXVsbGV0cyIsCiAgICAgICAgIkJpbGxldHMiLAogICAgICAgICJNYWxsZXRzIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIlRoZSByZWNydWl0bWVudCBvZiB5b3VuZyBjaGlsZHJlbiBmb3IgdGhlIHB1cnBvc2Ugb2Ygc2VydmluZyBpbiB0aGUgT3R0b21hbiBnb3Zlcm5tZW50IGJhc2VkIG9uIG1lcml0IGlzIGNhbGxlZF9fX19fXyIsCiAgICAgICJhbnN3ZXIiOiAiRGV2c2hpcm1lIFN5c3RlbSIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJEeWFyY2h5IFN5c3RlbSIsCiAgICAgICAgIk1pbGxldCBTeXN0ZW0iLAogICAgICAgICJUb2xlcmF0aW9uIFN5c3RlbSIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgInByb21wdCI6ICJXaGljaCBvZiB0aGUgZm9sbG93aW5nIGVtcGlyZXMvZHluYXN0aWVzIGRpZCBOT1QgaGF2ZSBhIHN1bHRhbiBsZWFkaW5nIHRoZSBnb3Zlcm5tZW50PyIsCiAgICAgICJhbnN3ZXIiOiAiUWluZyIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJPdHRvbWFuIiwKICAgICAgICAiTXVnaGFsIiwKICAgICAgICAiQWxsIG9mIHRoZXNlIGVtcGlyZXMgc3VsdGFucyIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgInByb21wdCI6ICJUYXggY29sbGVjdG9ycyBpbiB0aGUgTXVnaGFsIEVtcGlyZSB3ZXJlIGNhbGxlZF9fX19fXyIsCiAgICAgICJhbnN3ZXIiOiAiWmFtaW5kYXJzIiwKICAgICAgInR5cGUiOiAiTXVsdGlwbGVDaG9pY2UiLAogICAgICAiZGlzdHJhY3RvcnMiOiBbCiAgICAgICAgIlphbnppYmFycyIsCiAgICAgICAgIlphYmlzaW1zIiwKICAgICAgICAiWmFtaWFzIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIiIsCiAgICAgICJhbnN3ZXIiOiAiVHJ1ZSIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJUcnVlIG9yIEZhbHNlOiBVbmRlciBBa2JhciBsZWFkZXJzaGlwLCByZWxpZ2lvdXMgdG9sZXJhdGlvbiBmbG91cmlzaGVkIGluIHRoZSBNdWdoYWwgRW1waXJlLiBUaGlzIHdhcyBiZXN0IHNob3duIHdpdGggaGlzIGNvbW1pc3Npb25pbmcgb2YgdGhlIEliYWRhdCBLaGFuLCBhIGJ1aWxkaW5nIHdoZXJlIHBoaWxvc29waGljYWwgZGlzY3Vzc2lvbnMgYWJvdXQgZGlmZmVyZW50IHJlbGlnaW9ucywgc3VjaCBhcyBDaHJpc3RpYW5pdHkgYW5kIEhpbmR1aXNtLCB0b29rIHBsYWNlLiIsCiAgICAgICAgIkZhbHNlIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIldoaWNoIG9mIHRoZSBmb2xsb3dpbmcgaXMgRkFMU0UgcmVnYXJkaW5nIEF1cmFuemVi4oCZcyBhY3Rpb25zIGR1cmluZyBoaXMgcnVsZSBvZiB0aGUgTXVnaGFsIEVtcGlyZT8iLAogICAgICAiYW5zd2VyIjogIkhlIGhlbGQgYSBzdHJvbmcgcmVsaWdpb3VzIHRvbGVyYXRpb24gZm9yIG90aGVycy4iLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiSGUgYXR0ZW1wdGVkIHRvIGltcGxlbWVudCBtb3JlIG9mIGFuIElzbGFtaWMgcHJpbmNpcGxlIGludG8gcGxhY2UuIiwKICAgICAgICAiSGlzIHByb2hpYml0aW9uIG9mIHNhdGkgYnkgd29tZW4gZHVyaW5nIHRoZWlyIGh1c2JhbmTigJlzIGZ1bmVyYWxzLiIsCiAgICAgICAgIkhlIGRyb3ZlIG91dCBub24tTXVzbGltcyBhbmQgSGluZHVzIGR1ZSB0byBoaXMgYmVsaWVmcyBvbiByZWxpZ2lvbi4iCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJwcm9tcHQiOiAiV2hpY2ggb2YgdGhlIGZvbGxvd2luZyBjYXVzZWQgdGhlIE1pbmcgRHluYXN0eeKAmXMgY29sbGFwc2U/IiwKICAgICAgImFuc3dlciI6ICJDb21tb24sIHlvdSBzZWUgZW5vdWdoIGJhZCByZWFzb25zIHRvIGtub3cgdGhlIGFuc3dlci4iLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiSW5mbGF0aW9uIGZyb20gb3V0c2lkZSBzaWx2ZXIgZXhwb3J0cy4iLAogICAgICAgICJEZWNsaW5pbmcgY3JvcCB5aWVsZHMsIGNhdXNpbmcgc3RhcnZhdGlvbi4iLAogICAgICAgICJIaWdoIHRheGVzIGFuZCBoZWF2eSBjb3JydXB0aW9uLiIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgInByb21wdCI6ICJIb3cgd2FzIENoaW5h4oCZcyB2aWV3IG9uIFBvcnR1Z2FsIGR1cmluZyB0aGVpciBhcnJpdmFsIGluIHRoZSAxNTAwcz8iLAogICAgICAiYW5zd2VyIjogIlRoZXkgd2VyZSB2aWV3ZWQgYXMgZXhvdGljIGFuZCB1bnVzdWFsIGJhcmJhcmlhbnMgZHVlIHRvIHRoZWlyIGJlaGF2aW9yLCB3aXRoIENoaW5hIHZpZXdpbmcgdGhlbSBhcyDigJxsaXR0bGUgYnJvdGhlcnMu4oCdICIsCiAgICAgICJ0eXBlIjogIk11bHRpcGxlQ2hvaWNlIiwKICAgICAgImRpc3RyYWN0b3JzIjogWwogICAgICAgICJUaGV5IHZpZXdlZCB0aGVtIGFzIG5ldyBuZWlnaGJvcnMgYW5kIGVuam95ZWQgdGhlaXIgY29tcGFueS4iLAogICAgICAgICJUaGV5IHZpZXdlZCB0aGVtIGFzIGVuZW1pZXMgb2YgdGhlIHBlb3BsZSwgYW5kIHRoZXkgc2hvdWxkIGJlIGVsaW1pbmF0ZWQgYXQgYWxsIGNvc3RzLiIsCiAgICAgICAgIlRoZXkgdmlld2VkIHRoZW0gYXMgaW50ZWxsaWdlbnQgYW5kIHNvcGhpc3RpY2F0ZWQgaHVtYW5zIGZyb20gdGhlIFdlc3QsIHdobyBzYXcgQ2hyaXN0aWFuaXR5IGFzIGEgbmV3IHdvbmRlciB0byBDaGluYS4iCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJwcm9tcHQiOiAiX19fX18gd2VyZSBDaHJpc3RpYW4gbWlzc2lvbmFyaWVzIHdobyB3ZXJlIGhpZ2hseSBlZHVjYXRlZCBhYm91dCB0aGUgRXVyb3BlYW5zIHBoaWxvc29waGljYWwgYW5kIHNjaWVudGlmaWMgZGV2ZWxvcG1lbnRzIG9mIHRoZSB3b3JsZCB0aGF0IGNhbWUgYW5kIGludHJvZHVjZWQgQ2hyaXN0aWFuaXR5IHRvIHRoZSBDaGluZXNlLiBUaGV5IGhlbHBlZCBicmlkZ2UgcGFyYWxsZWxzIGJldHdlZW4gdGhlaXIgb3duIHJlbGlnaW9uIGFuZCBDb25mdWNpYW5pc20sIHN1Y2ggYXMgbW9yYWxpdHkgYW5kIGV0aGljcy4iLAogICAgICAiYW5zd2VyIjogIkplc3VpdHMiLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiUG9wZXMiLAogICAgICAgICJNZXNzZW5nZXJzIiwKICAgICAgICAiSmVuZ2FzIgogICAgICBdCiAgICB9LAogICAgewogICAgICAicHJvbXB0IjogIldoeSBkaWQgQ2hyaXN0aWFuaXR5IGRpZSBvdXQgd2l0aGluIHRoZSBRaW5nIER5bmFzdHk/IiwKICAgICAgImFuc3dlciI6ICJJdCBiZWNhbWUgb3V0bGF3ZWQgYWZ0ZXIgY29tcGxhaW50cyBvZiBmb3JjZWQgY29udmVyc2lvbnMgZnJvbSB0aGUgQ2hpbmVzZSB3ZW50IHRvIHRoZSBQb3BlLiBUaGV5IGFsc28gZ3JldyBkaXNpbGx1c2lvbmVkIHdpdGggdGhlIHBhcmFsbGVscyBiZXR3ZWVuIENocmlzdGlhbml0eSBhbmQgQ29uZnVjaWFuaXNtLiAiLAogICAgICAidHlwZSI6ICJNdWx0aXBsZUNob2ljZSIsCiAgICAgICJkaXN0cmFjdG9ycyI6IFsKICAgICAgICAiSXRzIHBvcHVsYXJpdHkgZGVjbGluZWQgYmVjYXVzZSBCdWRkaGlzbSBiZWNhbWUgbW9yZSBpbmZsdWVudGlhbCwgYXMgd2l0aCB0aGUgbm9tYWRpYyBKaWUgcGVvcGxlIGJlZm9yZS4iLAogICAgICAgICJUaGUgRXVyb3BlYW5zIGFsbCBjb252ZXJ0ZWQgdG8gQ29uZnVjaWFuaXNtIGFmdGVyIHNwZW5kaW5nIHRpbWUgaW4gQ2hpbmEsIGFzIHRoZXkgZm91bmQgdGhlaXIgcHJpbmNpcGxlcyBtb3JlIGVudGljaW5nLiIsCiAgICAgICAgIkNocmlzdGlhbml0eSBuZXZlciBkaWVkIG91dC4iCiAgICAgIF0KICAgIH0KICBdCn0=`),
+  quiz: new Quiz(),
   currentScreen: 'quiz-settings',
-  currentQuestion: 0,
-  cleanupHandler: () => {},
+  currentQuestion: -1,
+  exported: false,
 };
+
+// Try to load the editor state from autosaved data
+try {
+  editorState.quiz = new Quiz(localStorage.getItem('editor-autosave'));
+} catch (e) {
+  editorState.quiz = new Quiz();
+}
 
 // Sets the quiz to a different quiz
 const setQuiz = (quizData) => {
   editorState.quiz = new Quiz(quizData);
   editorState.currentScreen = 'quiz-settings';
-  editorState.currentQuestion = 0;
-  editorState.cleanupHandler = () => {};
+  editorState.currentQuestion = -1;
+  editorState.exported = false;
 
   updateScreen();
+  autosave();
 }
 
 // Handles importing a quiz
-const handleImportQuiz = (e) => {
+const importQuiz = (e) => {
+  let data = prompt('Paste the quiz data into the box below...');
+  try {
+    setQuiz(data);
+  } catch (e) {
+    console.log(e);
+    alert('There was an error with the quiz data you provided. It may be invalid.');
+  }
+}
+
+// Saves the current editor state to localstorage
+const autosave = () => {
+  localStorage.setItem('editor-autosave', editorState.quiz.toString());
+  editorState.exported = false;
+}
+
+// Copies the quiz data to clipboard
+const copyQuizData = () => {
+  navigator.clipboard.writeText(editorState.quiz.toString());
+  editorState.exported = true;
 }
 
 // Sets the current screen and calls update
@@ -76,10 +106,164 @@ const setCurrentScreen = (newScreen) => {
   updateScreen();
 }
 
+// Selects the settings screen
+const navigateSettings = () => {
+  editorState.currentQuestion = -1;
+
+  quizNameInput.value = editorState.quiz.title;
+  quizSettingsRandomizeQuestions.checked = editorState.quiz.settings.randomizeQuestionOrder;
+
+  setCurrentScreen('quiz-settings');
+}
+
+// Selects the question with the index questionIndex
+const navigateQuestion = (questionIndex) => {
+  editorState.currentQuestion = parseInt(questionIndex);
+
+  // Update the question fields
+  const q = editorState.quiz.questions[editorState.currentQuestion];
+  quizQuestionPrompt.value = q.prompt;
+
+  // If the question is a multiple choice question
+  if (q.type === 'MultipleChoice') {
+    // Set the multiple choice answer box value to the question's current answer
+    quizQuestionAnswer.value = q.answer;
+
+    updateDistractors();
+
+    // Show the table
+    questionOptionsTable.classList.remove('editor-hidden');
+  }
+  // Otherwise, hide the table
+  else {
+    questionOptionsTable.classList.add('editor-hidden');
+  }
+
+  setCurrentScreen(`question-editor`);
+}
+
+// Draws the distractors to the screen, clearing the previous data
+const updateDistractors = () => {
+  const q = editorState.quiz.questions[editorState.currentQuestion];
+
+  while (questionOptionsTable.childElementCount > 1) {
+    questionOptionsTable.deleteRow(1);
+  }
+
+  // Populate the distractors
+  for (const distractor of q.distractors) {
+    const tr = document.createElement('tr');
+
+    addDistractorRow(tr, distractor);
+    
+    questionOptionsTable.appendChild(tr);
+  }
+}
+
+// Creates a distractor row
+const addDistractorRow = (tr, distractor) => {
+  // Create the checkbox
+  // const checkboxTd = document.createElement('td');
+  // const checkbox = document.createElement('button');
+  // checkbox.setAttribute('data-checked', 'no');
+  // checkboxTd.appendChild(checkbox);
+
+  // Create the distractor input
+  const inputTd = document.createElement('td');
+  const inputBox = document.createElement('input');
+  inputBox.type = 'text';
+  inputBox.value = distractor;
+  inputBox.addEventListener('change', (e) => {
+    writeDistractors();
+
+    autosave();
+  });
+  // input.name = `question-option-text-${crypto.randomUUID}`;
+  inputTd.appendChild(inputBox);
+
+  // Create the delete button input
+  const deleteTd = document.createElement('td');
+  const deleteBtn = document.createElement('button');
+  deleteBtn.innerText = 'X';
+  deleteBtn.addEventListener('click', (e) => {
+    e.target.parentElement.parentElement.remove();
+    writeDistractors();
+    updateDistractors();
+
+    autosave();
+  });
+  deleteTd.appendChild(deleteBtn);
+
+  // Append all children to the row
+  tr.appendChild(inputTd);
+  tr.appendChild(deleteTd);
+}
+
+const writeDistractors = () => {
+  // Reset the distractors
+  editorState.quiz.questions[editorState.currentQuestion].distractors = [];
+
+  // For every child row of the table
+  for (let i = 0; i < questionOptionsTable.children.length; i++) {
+    // Ignore the first row
+    if (i === 0) continue;
+
+    // Add the distractor text to the list
+    editorState.quiz.questions[editorState.currentQuestion].distractors.push(questionOptionsTable.children[i].children[0].children[0].value);
+  }
+}
+
+// Refreshes the list of questions on the left-hand panel
+const updateQuestionList = () => {
+  // Clear the current question list
+  while (questionSelectorQuestions.firstChild) {
+    questionSelectorQuestions.removeChild(questionSelectorQuestions.lastChild);
+  }
+
+  // If the active list option is the settings box
+  if (editorState.currentQuestion === -1) {
+    quizSettingsNavButton.classList.add('question-navigation-button--selected');
+  } else {
+    quizSettingsNavButton.classList.remove('question-navigation-button--selected');
+  }
+
+  // For each question in the quiz
+  let i = 0;
+  for (const question of editorState.quiz.questions) {
+    // Create a new button with the correct identifiers
+    const qqButton = document.createElement('button');
+    qqButton.classList.add('question-navigation-button');
+    qqButton.setAttribute('id', `quiz-question-${i}`);
+    qqButton.setAttribute('data-question-index', i);
+    if (question.prompt.length > 18) {
+      qqButton.innerText = `[${i + 1}] ${question.prompt.substring(0,15)}...`;
+    }
+    else {
+      qqButton.innerText = `[${i + 1}] ${question.prompt}`;
+    }
+
+    // If the active list option is the question being rendered
+    if (editorState.currentQuestion === i) {
+      qqButton.classList.add('question-navigation-button--selected');
+    }
+
+    qqButton.onclick = (e) => {
+      navigateQuestion(e.target.getAttribute('data-question-index'));
+    };
+
+    // Add the child to the list
+    questionSelectorQuestions.appendChild(qqButton);
+    i++;
+  }
+
+  // Done
+  return;
+}
+
 // Updates the DOM to match the current screen
 const updateScreen = () => {
-  // Cleanup the current scene
-  editorState.cleanupHandler();
+  // Update the question list
+  updateQuestionList();
 
   // If the screen is the quiz settings screen
   if (editorState.currentScreen === 'quiz-settings') {
@@ -96,48 +280,59 @@ const updateScreen = () => {
 
     // Unhide the question editor screen
     questionEditorContainer.classList.remove('editor-hidden');
-
-    // If the question doesn't exist
-    if (!editorState.quiz.hasQuestion(editorState.currentQuestion)) {
-      alert(`[E1101] Unable to load quiz question index ${editorState.currentQuestion}; does not exist.`);
-    }
-
-    // Store the current question in a variable for convenience
-    const cq = editorState.quiz.questions[editorState.currentQuestion];
-
-    // Populate the input box with the prompt
-    quizQuestionPrompt.value = cq.prompt;
-
-    // Handle updates to the prompt box
-    const onQuizQuestionPromptInput = (e) => {
-      cq.prompt = quizQuestionPrompt.value;
-    }
-    quizQuestionPrompt.addEventListener('input', onQuizQuestionPromptInput);
-
-    // Handle updates to the answer box
-    const onQuizQuestionAnswerInput = (e) => {
-      cq.answer = quizQuestionAnswer.value;
-    }
-    quizQuestionAnswer.addEventListener('input', onQuizQuestionAnswerInput);
-
-    // If the question is multiple choice
-    if (cq.type === 'MultipleChoice') {
-      // Show the question options table
-      questionOptionsTable.classList.remove('editor-hidden');
-
-      // Populate the options
-      for (let i = 0; i < cq.distractors.length; i++) {
-        // Create a table row
-        const row = document.createElement('tr');
-        // Create the option text editor
-        
-      }
-    }
-    // Otherwise, hide the table
-    else {
-      questionOptionsTable.classList.add('editor-hidden');
-    }
   }
 }
 
-updateScreen();
+// Editor event handlers
+window.addEventListener('beforeunload', (e) => {
+  if (editorState.exported) {
+    return undefined;
+  }
+  return 'It appears you have not exported the latest version of your quiz. If you leave the page, your work may be lost.';
+});
+
+// Settings event handlers
+quizSettingsNavButton.addEventListener('click', navigateSettings);
+copyQuizDataButton.addEventListener('click', copyQuizData);
+importQuizButton.addEventListener('click', importQuiz);
+quizNameInput.addEventListener('change', (e) => {
+  editorState.quiz.title = e.target.value;
+
+  autosave();
+});
+quizSettingsRandomizeQuestions.addEventListener('change', (e) => {
+  editorState.quiz.settings.randomizeQuestionOrder = e.target.checked;
+
+  autosave();
+});
+helpInformationToggle.addEventListener('click', (e) => {
+  helpInformation.classList.toggle('editor-hidden');
+});
+
+// Question editor event handlers
+addDistractorButton.addEventListener('click', (e) => {
+  const tr = document.createElement('tr');
+  addDistractorRow(tr, 'New Option');
+  questionOptionsTable.appendChild(tr);
+
+  autosave();
+});
+quizQuestionPrompt.addEventListener('change', (e) => {
+  editorState.quiz.questions[editorState.currentQuestion].prompt = e.target.value;
+  updateQuestionList();
+
+  autosave();
+});
+quizQuestionAnswer.addEventListener('change', (e) => {
+  editorState.quiz.questions[editorState.currentQuestion].answer = e.target.value;
+
+  autosave();
+});
+newQuestionMultipleChoiceButton.addEventListener('click', (e) => {
+  editorState.quiz.addMultipleChoiceQuestion('', '', []);
+  navigateQuestion(editorState.quiz.questions.length - 1);
+
+  autosave();
+});
+
+navigateSettings();
