@@ -131,20 +131,20 @@ quizInstructionsContinue.addEventListener('click', (e) => {
         // Create a container for the radio button
         const radioContainer = document.createElement('div');
         radioContainer.classList.add('quiz-radio-container');
-        radioContainer.id = 'quiz-radio-container-' + btoa(opt);
+        radioContainer.id = 'quiz-radio-container-' + opt;
 
         // Create the radio field
         const inputField = document.createElement('input');
         inputField.type = 'radio';
         inputField.name = 'quiz-mc-question';
-        inputField.id = 'quiz-mc-option-' + btoa(opt);
+        inputField.id = 'quiz-mc-option-' + opt;
         inputField.value = opt;
         inputField.classList.add('quiz-radio-option', 'quiz-hidden');
 
         // Create the text label
         const inputLabel = document.createElement('label');
-        inputLabel.htmlFor = 'quiz-mc-option-' + btoa(opt);
-        inputLabel.id = 'quiz-mc-option-label-' + btoa(opt);
+        inputLabel.htmlFor = 'quiz-mc-option-' + opt;
+        inputLabel.id = 'quiz-mc-option-label-' + opt;
         inputLabel.innerText = opt;
 
         // Populate the children
@@ -160,19 +160,19 @@ quizInstructionsContinue.addEventListener('click', (e) => {
           // If the option is correct
           if (opt == question.answer) {
             // Mark the answer as correct
-            document.getElementById('quiz-radio-container-' + btoa(opt)).classList.add('quiz-radio-container--correct');
+            document.getElementById('quiz-radio-container-' + opt).classList.add('quiz-radio-container--correct');
             
             // If the element is selected
-            if (document.getElementById('quiz-mc-option-' + btoa(opt)).checked) {
+            if (document.getElementById('quiz-mc-option-' + opt).checked) {
               // Increment the number of correct answers
               questionsCorrect++;
             }
           }
 
           // If it is selected but false
-          else if (document.getElementById('quiz-mc-option-' + btoa(opt)).checked) {
+          else if (document.getElementById('quiz-mc-option-' + opt).checked) {
             // Mark the answer as incorrect
-            document.getElementById('quiz-radio-container-' + btoa(opt)).classList.add('quiz-radio-container--incorrect');
+            document.getElementById('quiz-radio-container-' + opt).classList.add('quiz-radio-container--incorrect');
           }
         }
 
