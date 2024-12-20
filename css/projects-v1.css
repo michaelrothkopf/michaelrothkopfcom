@@ -1,0 +1,42 @@
+/* Pad the main content from the navigation bar */
+.main-content {
+  margin: 0;
+  padding: 25px;
+}
+
+/* Each row contains three cards of equal size on desktop */
+.project-row {
+  width: 100%;
+  padding: 0 5%;
+  
+  display: flex;
+  flex-direction: row;
+}
+
+.project-card {
+  flex: 1;
+
+  /* Pad away from other cards to avoid cramped text */
+  padding: 0 10px;
+}
+
+/* On smaller screens, display the project cards vertically */
+@media screen and (max-width: 1024px) {
+  .project-row {
+    display: block;
+  }
+
+  .project-card {
+    padding-bottom: 50px;
+  }
+
+  .project-card__controls {
+    text-align: center;
+  }
+
+  .project-card__controls button {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}

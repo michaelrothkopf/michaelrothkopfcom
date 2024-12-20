@@ -23,27 +23,13 @@
   text-align: center;
 }
 
-/* Buttons for links to other pages */
 .landing-content__link {
   display: block;
-  padding: 0.75em;
-
-  background-color: transparent;
-  border: 1px solid white;
-
-  text-decoration: none;
-  color: var(--text-primary);
-
-  transition: background-color 0.2s, color 0.2s;
+  font-size: medium;
 }
 
 .landing-content__link:not(:first-child) {
   margin-top: 0.75em;
-}
-
-.landing-content__link:hover {
-  background-color: white;
-  color: var(--text-inverted);
 }
 
 /* Large desktop has landing-content on left side and no padding */

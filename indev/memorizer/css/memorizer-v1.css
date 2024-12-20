@@ -1,0 +1,67 @@
+#memorizer {
+  width: 100%;
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 7.5% 10%;
+}
+
+#actions-cards {
+  display: flex;
+  flex-direction: row;
+}
+
+#actions-cards .action-buttons {
+  flex: 2;
+}
+
+#actions-cards .separator {
+  flex: 1;
+}
+
+#actions-cards .action-buttons button {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--bg-tertiary);
+  transition: background-color 125ms linear;
+
+  padding: 2.5rem 0;
+  font-size: 1.25rem;
+
+  display: block;
+  width: 100%;
+  border-radius: 0.25rem;
+}
+
+#actions-cards .action-buttons button:hover {
+  background-color: var(--bg-tertiary);
+  cursor: pointer;
+}
+
+#actions-cards .action-buttons button:not(:last-child) {
+  margin-bottom: 1.25rem;
+}
+
+#actions-cards .cards {
+  flex: 5;
+}
+
+#term-list {
+  margin-top: 2rem;
+
+  display: flex;
+  flex-direction: row;
+}
+
+#term-list h2 {
+  flex: 3;
+}
+
+#term-list input {
+  flex: 1;
+
+  background-color: var(--bg-primary);
+  border: 1px solid var(--bg-secondary);
+  padding: 0 1rem;
+
+  outline: none;
+}
