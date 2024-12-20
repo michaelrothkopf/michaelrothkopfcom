@@ -2,6 +2,8 @@
 .nav-main {
   margin: 0;
   padding: 1.25rem;
+
+  position: relative;
   z-index: 1000;
 
   background-color: var(--bg-secondary);
