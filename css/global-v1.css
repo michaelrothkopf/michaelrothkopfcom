@@ -3,7 +3,6 @@
 * {
   font-family: 'Roboto Mono', monospace, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
-  color: var(--text-primary);
 }
 
 /* Global color scheme variables */
@@ -25,6 +24,12 @@ body {
   padding: 0;
 
   background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Manual override for text colors, don't inherit from body */
+h1,h2,h3,h4,h5,h6,p,span,div,a,select,button {
+  color: var(--text-primary);
 }
 
 /* Make uniform buttons across the site */
@@ -42,8 +47,14 @@ body {
 
   transition: background-color 0.2s, color 0.2s;
 }
-
 .button:hover {
   background-color: white;
   color: var(--text-inverted);
+}
+
+/* Make uniform dropdowns */
+.select {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--text-primary);
+  padding: 10px;
 }

@@ -1,5 +1,7 @@
-// Hook into the board
-const cb = Chessboard('chessBoard', {
-  draggable: true,
-});
-
+export class Opening {
+  constructor(name, pgns) {
+    // Set the opening name
+    this.name = name;
+    
+  }
+}
