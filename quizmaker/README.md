@@ -4,7 +4,7 @@ This simple tool allows users to make custom quizzes for studying.
 
 The main page allows you to paste quiz data in Base64-encoded JSON. It then runs through the quiz's questions, showing each answer as correct or incorrect as you go and giving you a final score.
 
-The quiz data is encrypted in Base64 so you don't accidentally look at the answers.
+The quiz data is encrypted in Base64 so users don't accidentally look at the answers.
 
 ## Stack
 
