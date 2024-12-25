@@ -20,12 +20,6 @@
   padding: 0 10px;
 }
 
-.algorithm-card__controls a {
-  display: block;
-  width: 100%;
-  margin-bottom: 8px;
-}
-
 /* On smaller screens, display the algorithm cards vertically */
 @media screen and (max-width: 1024px) {
   .algorithm-row {
@@ -38,5 +32,11 @@
 
   .algorithm-card__controls {
     text-align: center;
+  }
+
+  .algorithm-card__controls a {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
   }
 }
