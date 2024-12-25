@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort | Algorithm Visualizers</title>
+    <link rel="stylesheet" href="/css/global-v1.css">
+    <link rel="stylesheet" href="/css/nav-v2.css">
+    <link rel="stylesheet" href="css/algorithm-v1.css">
+    <style>
+      /* Fixes blue flash on nav links when loading page */
+      a {color: white;}
+    </style>
+  </head>
+  <body>
+    <nav class="nav-main">
+      <div class="nav-main__persistent">
+        <a class="nav-main__brand" href="/">Algorithm Visualizers</a>
+        <div class="nav-main__persistent-spacing"></div>
+        <div class="nav-toggle" id="nav-toggle">
+          <div class="nav-toggle__bar nav-toggle__bar--top"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--mid"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--bot"></div>
+        </div>
+      </div>
+      <div class="nav-main__spacing"></div>
+      <div class="nav-main__collapsible nav-main__collapsible--collapsed" id="nav-main__collapsible">
+        <a href="/" class="nav-main__link">Main Site</a>
+      </div>
+    </nav>
+    <div class="main-content">
+      <h1>Bubble Sort</h1>
+      <div class="controls">
+        <input class="text-input" type="text" name="max-value" id="maxValue" placeholder="Max value">
+        <button class="button" id="setMaxValue">See it!</button>
+        <br>
+        <input type="range" name="speed" id="speed" min="1" max="100" value="25">
+        <label for="speed">Speed</label>
+        <a href="about-bubblesort" class="button">What's this?</a>
+      </div>
+      <canvas id="canvas"></canvas>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script src="js/bubblesort.js"></script>
+  </body>
+</html>

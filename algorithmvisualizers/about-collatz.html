@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About the Collatz Conjecture | Algorithm Visualizers</title>
+    <link rel="stylesheet" href="/css/global-v1.css">
+    <link rel="stylesheet" href="/css/nav-v2.css">
+    <link rel="stylesheet" href="css/about-algorithm-v1.css">
+    <style>
+      /* Fixes blue flash on nav links when loading page */
+      a {color: white;}
+    </style>
+  </head>
+  <body>
+    <nav class="nav-main">
+      <div class="nav-main__persistent">
+        <a class="nav-main__brand" href="/">Algorithm Visualizers</a>
+        <div class="nav-main__persistent-spacing"></div>
+        <div class="nav-toggle" id="nav-toggle">
+          <div class="nav-toggle__bar nav-toggle__bar--top"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--mid"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--bot"></div>
+        </div>
+      </div>
+      <div class="nav-main__spacing"></div>
+      <div class="nav-main__collapsible nav-main__collapsible--collapsed" id="nav-main__collapsible">
+        <a href="/" class="nav-main__link">Main Site</a>
+      </div>
+    </nav>
+    <div class="main-content">
+      <h1>The Collatz Conjecture</h1>
+      <p>The Collatz conjecture is an unsolved problem that dates back to 1937, though mathematicians have proven it for certain ranges.</p>
+      <p>It revolves around a piecewise function:</p>
+      <p>$f(n)=3n+1$ for odd values of n</p>
+      <p>$f(n)=n/2$ for even values of n</p>
+      <p>This function takes a natural number (which can be any integer greater than zero) as its domain. The conjecture states that for all $n>0$, the sequence created by recursively calling the function will converge to $1$, at which point it becomes a loop.</p>
+      <p>In other words, if you take the value of the previous function call and put it through $f(n)$ enough times, $f(n)$ will eventually equal $1$.</p>
+      <h2>Visualization</h2>
+      <p>I visualized the Collatz conjecture using HTML5 Canvas. Each bar represents a "step" in the Collatz sequence starting at the inputted number.</p>
+      <p>The visualization renders bars until $f(n)$ reaches $1$. You can see in slow motion how a sequence jumps around before eventually falling to zero.</p>
+      <p>Note that due to limitations of the canvas, some long sequences may not render correctly.</p>
+      <h2>Interesting Sequences</h2>
+      <p>Some sequences have interesting results due to the properties of the function. Try some of the following:</p>
+      <ul>
+        <li>Powers of 2</li>
+        <li>Prime numbers</li>
+        <li>Large numbers</li>
+        <li>Doubling your previous input</li>
+        <li>Odd vs. even starting numbers</li>
+      </ul>
+      <div class="action-container">
+        <a href="collatz" class="button">Try it out!</a>
+      </div>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script src="js/mathjax-config.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </body>
+</html>

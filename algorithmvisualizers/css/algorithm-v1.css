@@ -1,0 +1,16 @@
+/* Center the canvas and controls */
+.main-content {
+  width: 100%;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+/* Separate the canvas a little bit */
+canvas {
+  margin-top: 5rem;
+}
+
+/* Spacing for speed */
+#speed {
+  margin-top: 1rem;
+}

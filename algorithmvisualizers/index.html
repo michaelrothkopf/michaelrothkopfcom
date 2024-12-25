@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Visualizers | Michael Rothkopf</title>
+    <link rel="stylesheet" href="/css/global-v1.css">
+    <link rel="stylesheet" href="/css/nav-v2.css">
+    <link rel="stylesheet" href="css/classicalgorithms-v1.css">
+    <style>
+      /* Fixes blue flash on nav links when loading page */
+      a {color: white;}
+    </style>
+  </head>
+  <body>
+    <nav class="nav-main">
+      <div class="nav-main__persistent">
+        <a class="nav-main__brand" href="">Algorithm Visualizers</a>
+        <div class="nav-main__persistent-spacing"></div>
+        <div class="nav-toggle" id="nav-toggle">
+          <div class="nav-toggle__bar nav-toggle__bar--top"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--mid"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--bot"></div>
+        </div>
+      </div>
+      <div class="nav-main__spacing"></div>
+      <div class="nav-main__collapsible nav-main__collapsible--collapsed" id="nav-main__collapsible">
+        <a href="/" class="nav-main__link">Main Site</a>
+      </div>
+    </nav>
+    <div class="main-content">
+      <div class="algorithm-row">
+        <div class="algorithm-card">
+          <h3>Collatz Conjecture</h3>
+          <p>This deceivingly simple piecewise function has stood for nearly 100 years as one of the most famous unsolved problems in mathematics.</p>
+          <div class="algorithm-card__controls">
+            <a href="https://github.com/michaelrothkopf/michaelrothkopfcom/tree/master/classicalgorithms/js/collatz.js" class="button" target="_blank">Source Code</a>
+            <a href="collatz" class="button">See Visualization</a>
+            <a href="about-collatz" class="button">About</a>
+          </div>
+        </div>
+        <div class="algorithm-card">
+          <h3>Bubble Sort</h3>
+          <p>One of the earliest sorting algorithms, today Bubble Sort serves as a conceptual introduction to the subject.</p>
+          <div class="algorithm-card__controls">
+            <a href="https://github.com/michaelrothkopf/michaelrothkopfcom/tree/master/classicalgorithms/js/bubblesort.js" class="button" target="_blank">Source Code</a>
+            <a href="bubblesort" class="button">See Visualization</a>
+            <a href="about-bubblesort" class="button">About</a>
+          </div>
+        </div>
+        <div class="algorithm-card">
+          <h3>Selection Sort</h3>
+          <p>Another early sorting algorithm, Selection Sort finds use in low-memory applications.</p>
+          <div class="algorithm-card__controls">
+            <a href="https://github.com/michaelrothkopf/michaelrothkopfcom/tree/master/classicalgorithms/js/selectionsort.js" class="button" target="_blank">Source Code</a>
+            <a href="selectionsort" class="button">See Visualization</a>
+            <a href="about-selectionsort" class="button">About</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/nav.js"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Bubble Sort | Algorithm Visualizers</title>
+    <link rel="stylesheet" href="/css/global-v1.css">
+    <link rel="stylesheet" href="/css/nav-v2.css">
+    <link rel="stylesheet" href="css/about-algorithm-v1.css">
+    <style>
+      /* Fixes blue flash on nav links when loading page */
+      a {color: white;}
+    </style>
+  </head>
+  <body>
+    <nav class="nav-main">
+      <div class="nav-main__persistent">
+        <a class="nav-main__brand" href="/">Algorithm Visualizers</a>
+        <div class="nav-main__persistent-spacing"></div>
+        <div class="nav-toggle" id="nav-toggle">
+          <div class="nav-toggle__bar nav-toggle__bar--top"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--mid"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--bot"></div>
+        </div>
+      </div>
+      <div class="nav-main__spacing"></div>
+      <div class="nav-main__collapsible nav-main__collapsible--collapsed" id="nav-main__collapsible">
+        <a href="/" class="nav-main__link">Main Site</a>
+      </div>
+    </nav>
+    <div class="main-content">
+      <h1>Bubble Sort</h1>
+      <p>Bubble Sort is a basic sorting algorithm, often called the simplest. It's also known as "sinking sort" and was one of the first such algorithms ever developed.</p>
+      <p>The algorithm follows an intuitive procedure:</p>
+      <ol>
+        <li>Compare the first two elements of the array</li>
+        <li>If the first is larger than the second, swap them</li>
+        <li>Repeat with the second and third elements until the last element is reached</li>
+        <li>Repeat steps 1 to 3, iterating one element less close to the end of the array each time until you have reached the beginning</li>
+      </ol>
+      <p>In simpler terms, the algorithm takes the largest remaining value to the end of the array for a subset of the array.</p>
+      <p>Bubble Sort is inefficient, requiring $O(n^2)$ time complexity in the average and worst cases. Modern sorting algorithms have largely replaced it.</p>
+      <h2>Visualization</h2>
+      <p>I used HTML5 Canvas to render the visualization. Each bar's height represents the magnitude of its value in the array.</p>
+      <p>The visual shows each step with a small delay so users can see what's really happening, and the bar that is currently moving is highlighted.</p>
+      <div class="action-container">
+        <a href="bubblesort" class="button">Try it out!</a>
+      </div>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script src="js/mathjax-config.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </body>
+</html>

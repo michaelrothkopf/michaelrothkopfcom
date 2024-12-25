@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Selection Sort | Algorithm Visualizers</title>
+    <link rel="stylesheet" href="/css/global-v1.css">
+    <link rel="stylesheet" href="/css/nav-v2.css">
+    <link rel="stylesheet" href="css/about-algorithm-v1.css">
+    <style>
+      /* Fixes blue flash on nav links when loading page */
+      a {color: white;}
+    </style>
+  </head>
+  <body>
+    <nav class="nav-main">
+      <div class="nav-main__persistent">
+        <a class="nav-main__brand" href="/">Algorithm Visualizers</a>
+        <div class="nav-main__persistent-spacing"></div>
+        <div class="nav-toggle" id="nav-toggle">
+          <div class="nav-toggle__bar nav-toggle__bar--top"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--mid"></div>
+          <div class="nav-toggle__bar nav-toggle__bar--bot"></div>
+        </div>
+      </div>
+      <div class="nav-main__spacing"></div>
+      <div class="nav-main__collapsible nav-main__collapsible--collapsed" id="nav-main__collapsible">
+        <a href="/" class="nav-main__link">Main Site</a>
+      </div>
+    </nav>
+    <div class="main-content">
+      <h1>Selection Sort</h1>
+      <p>Like <a href="about-bubblesort.html">Bubble Sort</a>, Selection Sort is an early sorting algorithm. Its method is also simple, though somewhat less intuitive.</p>
+      <p>Selection Sort procedure:</p>
+      <ol>
+        <li>Select the first element of the array</li>
+        <li>Find the smallest element of those to the right and swap the current element with the smallest element</li>
+        <li>Repeat steps one and two for each index through the second to last</li>
+      </ol>
+      <p>The algorithm is almost the "opposite" of Bubble Sort, populating the smallest elements first.</p>
+      <p>Selection Sort always has a time complexity of $O(n^2)$, making it as inefficient as Bubble Sort. However, it has a better use case: low-memory applications.</p>
+      <p>The space complexity of Selection Sort is constant, $O(1)$. This means that when memory writes are expensive, Selection Sort is a viable choice.</p>
+      <h2>Visualization</h2>
+      <p>I used HTML5 Canvas to render the visualization. Each bar's height represents the magnitude of its value in the array.</p>
+      <p>The visual shows each step with a small delay so users can see what's really happening, and the bar that is currently moving is highlighted.</p>
+      <p>The red bar represents the working element, the blue the element that's currently being compared, and the yellow the element the algorithm currently thinks is smallest.</p>
+      <div class="action-container">
+        <a href="selectionsort.html" class="button">Try it out!</a>
+      </div>
+    </div>
+    <script src="/js/nav.js"></script>
+    <script src="js/mathjax-config.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </body>
+</html>

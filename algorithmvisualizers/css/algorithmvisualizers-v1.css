@@ -1,0 +1,42 @@
+/* Pad the main content from the navigation bar */
+.main-content {
+  margin: 0;
+  padding: 25px;
+}
+
+/* Each row contains three cards of equal size on desktop */
+.algorithm-row {
+  width: 100%;
+  padding: 0 5%;
+  
+  display: flex;
+  flex-direction: row;
+}
+
+.algorithm-card {
+  flex: 1;
+
+  /* Pad away from other cards to avoid cramped text */
+  padding: 0 10px;
+}
+
+.algorithm-card__controls button {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+/* On smaller screens, display the algorithm cards vertically */
+@media screen and (max-width: 1024px) {
+  .algorithm-row {
+    display: block;
+  }
+
+  .algorithm-card {
+    padding-bottom: 50px;
+  }
+
+  .algorithm-card__controls {
+    text-align: center;
+  }
+}
