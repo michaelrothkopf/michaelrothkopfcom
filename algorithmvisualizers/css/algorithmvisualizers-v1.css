@@ -20,7 +20,7 @@
   padding: 0 10px;
 }
 
-.algorithm-card__controls button {
+.algorithm-card__controls a {
   display: block;
   width: 100%;
   margin-bottom: 8px;
