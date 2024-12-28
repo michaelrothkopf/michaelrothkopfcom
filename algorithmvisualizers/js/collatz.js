@@ -71,8 +71,8 @@ setStartingValue.addEventListener('click', async (e) => {
   sv = Math.floor(startingValue.value);
   
   // If the starting value is invalid
-  if (isNaN(sv) || sv < 1) {
-    return alert('You have entered an invalid number! The Collatz conjecture needs a natural number (integer greater than zero).');
+  if (isNaN(sv) || sv < 1 || sv > 100000) {
+    return alert('You have entered an invalid number! The Collatz conjecture needs a natural number (integer greater than zero). Values above 100,000 are prohibited because they can cause performance issues.');
   }
 
   // Get the data

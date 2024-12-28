@@ -77,8 +77,8 @@ setMaxValue.addEventListener('click', async (e) => {
   mv = Math.floor(maxValue.value);
   
   // If the maximum value is invalid
-  if (isNaN(mv) || mv < 3) {
-    return alert('You have entered an invalid number! For the best visualization, you should have at least 3 values.');
+  if (isNaN(mv) || mv < 3 || mv > 100) {
+    return alert('You have entered an invalid number! For the best visualization, you should have between 3 and 100 values. Sizes above 100 are prohibited because they can cause performance issues.');
   }
 
   // Generate the data
